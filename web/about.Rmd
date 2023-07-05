@@ -3,3 +3,10 @@ title: "About This Website"
 ---
 
 More about this website.
+
+## Markdown syntax
+![cup of cilantro](img/cilantro.jpg)
+
+
+## HTML Syntax
+<img src="img/cilantro.jpg" alt="cup of cilantro">

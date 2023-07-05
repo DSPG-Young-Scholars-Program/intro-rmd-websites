@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="author" content="John Doe" />
+  <meta name="author" content="Joanna Schroeder" />
   <meta name="copyright" content="<a href = './index.html'>Go back to the demo site</a>"/>
   <title>Website Workflow using .Rmd and GitHub Pages</title>
   <style type="text/css">
@@ -25,16 +25,119 @@
 <div class="slide titlepage">
   <h1 class="title">Website Workflow using .Rmd and GitHub Pages</h1>
   <p class="author">
-John Doe
+Joanna Schroeder
   </p>
-  <p class="date">July 5 2023</p>
+  <p class="date">DSPG 2023 Training <br> July 5 2023</p>
 </div>
-<div id="table-of-contents" class="title-slide slide section level1"><h1>Table of Contents</h1></div><div id="assumed-knowledge" class="title-slide slide section level2"><h1>Assumed knowledge</h1></div><div id="what-are-we-doing" class="title-slide slide section level2"><h1>What are we doing</h1></div><div id="good-resources" class="title-slide slide section level2"><h1>Good resources</h1></div><div id="important-fileskeystone" class="title-slide slide section level2"><h1>Important files/keystone</h1></div><div id="options-for-customization" class="title-slide slide section level2"><h1>Options for customization</h1></div>
-<div id="assumed-knowledge-1" class="title-slide slide section level1"><h1>Assumed knowledge</h1></div>
-<div id="what-are-we-doing-1" class="title-slide slide section level1"><h1>What are we doing</h1></div>
-<div id="good-resources-1" class="title-slide slide section level1"><h1>Good resources</h1></div>
-<div id="important-fileskeystone-1" class="title-slide slide section level1"><h1>Important files/keystone</h1></div>
-<div id="options-for-customization-1" class="title-slide slide section level1"><h1>Options for customization</h1></div>
+<div id="todays-agenda" class="slide section level1">
+<h1>Today’s agenda</h1>
+<ul>
+<li>Assumed knowledge</li>
+<li>What are we doing</li>
+<li>Good resources</li>
+<li>Creating a bare-bones website</li>
+<li>Options for customization</li>
+<li>Deploying</li>
+</ul>
+</div>
+<div id="assumed-knowledge" class="slide section level1">
+<h1>Assumed knowledge</h1>
+<ul>
+<li>RMarkdowns (.Rmds)
+<ul>
+<li>Rmd syntax</li>
+</ul></li>
+<li>Git and GitHub</li>
+<li>Bonus: Any knowledge of web languages
+<ul>
+<li>HTML, CSS, and JavaScript</li>
+<li>This can be a great way to learn!</li>
+</ul></li>
+</ul>
+</div>
+<div id="what-are-we-doing" class="slide section level1">
+<h1>What are we doing</h1>
+<ul>
+<li><p>Goal: Understand the workflow of creating a website with Rmds and GitHub Pages</p></li>
+<li><p>In addition to being a great way to write <a href="https://books.ropensci.org/targets/literate-programming.html">literate programs</a>, Rmd supports a variety of output formats</p>
+<ul>
+<li>Including HTML!</li>
+</ul></li>
+<li><p>We can use YAML + Rmds to build a website</p>
+<ul>
+<li>YAML brings the organization</li>
+<li>Rmds bring the content</li>
+</ul></li>
+<li><p>Bonus: We can add customizations</p>
+<ul>
+<li>Themes</li>
+<li>Custom stylesheets (CSS)</li>
+<li>Custom HTML/Javascript</li>
+</ul></li>
+</ul>
+</div>
+<div id="good-resources" class="slide section level1">
+<h1>Good resources</h1>
+<ul>
+<li><a href="https://pages.github.com/">GitHub’s GitHub Pages Overview</a></li>
+<li><a href="https://rstudio4edu.github.io/rstudio4edu-book/intro-rmd.html">rstudio4edu’s RMarkdown Sites Cookbook</a></li>
+<li><a href="https://www.emilyzabor.com/tutorials/rmarkdown_websites_tutorial.html#Types_of_websites">Emily Zabor’s R Websites Tutorial</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/">The RMarkdown Cookbook</a></li>
+<li><a href="https://www.w3schools.com/">W3Schools</a></li>
+</ul>
+</div>
+<div id="creating-a-bare-bones-website" class="slide section level1">
+<h1>Creating a bare-bones website</h1>
+<p>We will need</p>
+<ul>
+<li>A YAML file
+<ul>
+<li><a href="https://www.redhat.com/en/topics/automation/what-is-yaml#:~:text=YAML%20is%20a%20human%2Dreadable,is%20for%20data%2C%20not%20documents.">From RedHat:</a> YAML is a human-readable data serialization language that is often used for writing configuration files. Depending on whom you ask, YAML stands for yet another markup language or YAML ain’t markup language (a recursive acronym), which emphasizes that YAML is for data, not documents.</li>
+</ul></li>
+<li>An index file
+<ul>
+<li>index.Rmd which will knit into index.html</li>
+<li>Automatic homepage</li>
+</ul></li>
+</ul>
+<p>From your directory*, run <code>rmarkdown::render_site()</code> to autopopulate files</p>
+<p>* You will want to consider your directory structure (specific to project needs)</p>
+</div>
+<div id="options-for-customization" class="slide section level1">
+<h1>Options for customization</h1>
+<ul>
+<li><p><a href="https://www.datadreaming.org/post/r-markdown-theme-gallery/">RMarkdown Themes</a></p></li>
+<li><p><a href="https://github.com/topics/personal-website">Templates</a></p>
+<ul>
+<li>Some of these are <a href="https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll">Jekyll themes</a></li>
+<li><a href="https://github.com/jo-schroeder/jo-schroeder.github.io">Joanna’s ancient site example</a></li>
+</ul></li>
+<li><p>Inline CSS</p></li>
+<li><p><a href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/_site.yml#L7">Linked</a> <a href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/style.css">CSS stylesheets</a></p></li>
+<li><p><a href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/data.Rmd#L11">Custom HTML</a></p></li>
+<li><p><a href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/health_equity_beta.Rmd#L1">Custom Javascript</a></p></li>
+<li><p>Note: VERY HACKY</p></li>
+</ul>
+</div>
+<div id="deploying" class="slide section level1">
+<h1>Deploying</h1>
+<ul>
+<li>Make sure your changes have been knit
+<ul>
+<li>Hint: Hit the hammer!</li>
+</ul></li>
+<li>Hosting with GitHub pages
+<ul>
+<li>Limited to one root site per organization or user, unlimited “project” sites</li>
+</ul></li>
+<li>From your repository Settings click Pages
+<ul>
+<li>Select Deploy from Branch (or GitHub Actions)</li>
+<li>Select your main branch and folder (where the knitted .html files live)</li>
+<li>Here’s where you can add a custom domain name</li>
+</ul></li>
+</ul>
+</div>
 
   <!-- dynamically load mathjax for compatibility with self-contained -->
   <script>
