@@ -81,6 +81,7 @@ From your \web directory\*, run `rmarkdown::render_site()` to autopopulate files
   - Hint: Hit the hammer!
 - Hosting with GitHub pages
   - Limited to one root site per organization or user, unlimited "project" sites
+  - You can only host a GitHub Pages website from a public repo
 - From your repository Settings click Pages
   - Select Deploy from Branch (or GitHub Actions)
   - Select your main branch and \docs folder (where the knitted .html files live)

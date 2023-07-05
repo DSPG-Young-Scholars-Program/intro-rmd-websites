@@ -1,5 +1,8 @@
 name: "my-website"
 output_dir: ../docs
+output:
+  html_document:
+    theme: "default"
 navbar:
   title: "My Website"
   right:
