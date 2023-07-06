@@ -7,7 +7,8 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="Joanna Schroeder" />
-  <meta name="copyright" content="<a href = './index.html'>Go back to the demo site</a>"/>
+  <meta name="copyright" content="<a href = './index.html'>Go back to
+the demo site</a>"/>
   <title>Website Workflow using .Rmd and GitHub Pages</title>
   <style type="text/css">
     code{white-space: pre-wrap;}
@@ -17,6 +18,7 @@
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
               </style>
+  <script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
   <link href="site_libs/slidy-2/styles/slidy.css" rel="stylesheet" />
   <script src="site_libs/slidy-2/scripts/slidy.js"></script>
   <script src="site_libs/slidy_shiny-1/slidy_shiny.js"></script>
@@ -58,8 +60,11 @@ Joanna Schroeder
 <div id="what-are-we-doing" class="slide section level1">
 <h1>What are we doing</h1>
 <ul>
-<li><p>Goal: Understand the workflow of creating a website with Rmds and GitHub Pages</p></li>
-<li><p>In addition to being a great way to write <a href="https://books.ropensci.org/targets/literate-programming.html">literate programs</a>, Rmd supports a variety of output formats</p>
+<li><p>Goal: Understand the workflow of creating a website with Rmds and
+GitHub Pages</p></li>
+<li><p>In addition to being a great way to write <a
+href="https://books.ropensci.org/targets/literate-programming.html">literate
+programs</a>, Rmd supports a variety of output formats</p>
 <ul>
 <li>Including HTML!</li>
 </ul></li>
@@ -79,10 +84,16 @@ Joanna Schroeder
 <div id="good-resources" class="slide section level1">
 <h1>Good resources</h1>
 <ul>
-<li><a href="https://pages.github.com/">GitHub’s GitHub Pages Overview</a></li>
-<li><a href="https://rstudio4edu.github.io/rstudio4edu-book/intro-rmd.html">rstudio4edu’s RMarkdown Sites Cookbook</a></li>
-<li><a href="https://www.emilyzabor.com/tutorials/rmarkdown_websites_tutorial.html#Types_of_websites">Emily Zabor’s R Websites Tutorial</a></li>
-<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/">The RMarkdown Cookbook</a></li>
+<li><a href="https://pages.github.com/">GitHub’s GitHub Pages
+Overview</a></li>
+<li><a
+href="https://rstudio4edu.github.io/rstudio4edu-book/intro-rmd.html">rstudio4edu’s
+RMarkdown Sites Cookbook</a></li>
+<li><a
+href="https://www.emilyzabor.com/tutorials/rmarkdown_websites_tutorial.html#Types_of_websites">Emily
+Zabor’s R Websites Tutorial</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/">The
+RMarkdown Cookbook</a></li>
 <li><a href="https://www.w3schools.com/">W3Schools</a></li>
 </ul>
 </div>
@@ -92,7 +103,13 @@ Joanna Schroeder
 <ul>
 <li>A YAML file
 <ul>
-<li><a href="https://www.redhat.com/en/topics/automation/what-is-yaml#:~:text=YAML%20is%20a%20human%2Dreadable,is%20for%20data%2C%20not%20documents.">From RedHat:</a> YAML is a human-readable data serialization language that is often used for writing configuration files. Depending on whom you ask, YAML stands for yet another markup language or YAML ain’t markup language (a recursive acronym), which emphasizes that YAML is for data, not documents.</li>
+<li><a
+href="https://www.redhat.com/en/topics/automation/what-is-yaml#:~:text=YAML%20is%20a%20human%2Dreadable,is%20for%20data%2C%20not%20documents.">From
+RedHat:</a> YAML is a human-readable data serialization language that is
+often used for writing configuration files. Depending on whom you ask,
+YAML stands for yet another markup language or YAML ain’t markup
+language (a recursive acronym), which emphasizes that YAML is for data,
+not documents.</li>
 </ul></li>
 <li>An index file
 <ul>
@@ -100,22 +117,39 @@ Joanna Schroeder
 <li>Automatic homepage</li>
 </ul></li>
 </ul>
-<p>From your directory*, run <code>rmarkdown::render_site()</code> to autopopulate files</p>
-<p>* You will want to consider your directory structure (specific to project needs)</p>
+<p>From your directory*, run <code>rmarkdown::render_site()</code> to
+autopopulate files</p>
+<p>* You will want to consider your directory structure (specific to
+project needs)</p>
 </div>
 <div id="options-for-customization" class="slide section level1">
 <h1>Options for customization</h1>
 <ul>
-<li><p><a href="https://www.datadreaming.org/post/r-markdown-theme-gallery/">RMarkdown Themes</a></p></li>
-<li><p><a href="https://github.com/topics/personal-website">Templates</a></p>
+<li><p><a
+href="https://www.datadreaming.org/post/r-markdown-theme-gallery/">RMarkdown
+Themes</a></p></li>
+<li><p><a
+href="https://github.com/topics/personal-website">Templates</a></p>
 <ul>
-<li>Some of these are <a href="https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll">Jekyll themes</a></li>
-<li><a href="https://github.com/jo-schroeder/jo-schroeder.github.io">Joanna’s ancient site example</a></li>
+<li>Some of these are <a
+href="https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll">Jekyll
+themes</a></li>
+<li><a
+href="https://github.com/jo-schroeder/jo-schroeder.github.io">Joanna’s
+ancient site example</a></li>
 </ul></li>
 <li><p>Inline CSS</p></li>
-<li><p><a href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/_site.yml#L7">Linked</a> <a href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/style.css">CSS stylesheets</a></p></li>
-<li><p><a href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/data.Rmd#L11">Custom HTML</a></p></li>
-<li><p><a href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/health_equity_beta.Rmd#L1">Custom Javascript</a></p></li>
+<li><p><a
+href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/_site.yml#L7">Linked</a>
+<a
+href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/style.css">CSS
+stylesheets</a></p></li>
+<li><p><a
+href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/data.Rmd#L11">Custom
+HTML</a></p></li>
+<li><p><a
+href="https://github.com/uva-bi-sdad/sdc.intro/blob/main/src/web/health_equity_beta.Rmd#L1">Custom
+Javascript</a></p></li>
 <li><p>Note: VERY HACKY</p></li>
 </ul>
 </div>
@@ -128,13 +162,15 @@ Joanna Schroeder
 </ul></li>
 <li>Hosting with GitHub pages
 <ul>
-<li>Limited to one root site per organization or user, unlimited “project” sites</li>
+<li>Limited to one root site per organization or user, unlimited
+“project” sites</li>
 <li>You can only host a GitHub Pages website from a public repo</li>
 </ul></li>
 <li>From your repository Settings click Pages
 <ul>
 <li>Select Deploy from Branch (or GitHub Actions)</li>
-<li>Select your main branch and folder (where the knitted .html files live)</li>
+<li>Select your main branch and folder (where the knitted .html files
+live)</li>
 <li>Here’s where you can add a custom domain name</li>
 </ul></li>
 </ul>

@@ -2,3 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+
+sample_large.csv
+sample_medium.csv
+sample_small.csv

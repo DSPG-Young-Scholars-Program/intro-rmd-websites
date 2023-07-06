@@ -5,6 +5,8 @@ date: '2023-06-01'
 output: html_document
 ---
 
+* Note: If chunks do not run, you may have to uncomment package installation or other lines *
+
 ## Setup
 
 ```{r setup, message = FALSE, warning = FALSE}
@@ -55,6 +57,7 @@ metadata <- read_csv("metadata.csv")
 # View the dataset to understand its structure (wide or long?), variables, data types 
 view(airquality)
 
+library(ggpmisc)
 # Pipe the dataset into a ggplot() call
 airquality %>% 
 # Set aesthetic mappings to the x and y axes for all geoms
@@ -67,7 +70,6 @@ airquality %>%
   # geom_smooth() #+
    geom_smooth(method = lm) +
 # Add statistical information about the trendline, position it in the plot
- #library(ggpmisc)
   stat_poly_eq(use_label(c("R2", "p", "n")),
                label.x = 20,
                label.y = 90)
@@ -89,7 +91,7 @@ airquality %>% filter(Month == 5) %>%
 #  ggplot(aes(x = date, y = Temp)) +
 #  geom_line()
 
-#library(lubridate)
+library(lubridate)
 # Manipulate the data before piping it into the ggplot() call to create a new date column
 airquality %>% mutate(date = make_date(2000, Month, Day)) %>% select(-Month, -Day) %>%
 # Pivot the data longer so we can plot all variables at once
@@ -104,7 +106,7 @@ airquality %>% mutate(date = make_date(2000, Month, Day)) %>% select(-Month, -Da
 
 ```{r bar}
 # View the dataset to understand its structure (wide or long?), variables, data types 
-#view(metadata)
+view(metadata)
 # Pipe the dataset into a ggplot() call
 metadata %>% 
 # Set aesthetic mapping for just one variable
@@ -130,7 +132,7 @@ The plots we've just created are what I would consider "bare-minimum" visualizat
 
 ## Next level visualization
 
-```{r important, fig.height = 4, fig.width = 6}
+```{r important, fig.width=14, fig.height=10}
 # Create a custom color palette
 my_pal <- RColorBrewer::brewer.pal(11, "PRGn")[c(2, 9)]
 

@@ -1,12 +1,14 @@
 ---
 title: "Introduction to R"
-author: "José Bayoán Santiago Calderón"
+author: "José Bayoán Santiago Calderón and Aaron Schroeder"
 date: "2019-06-06"
 output: html_document
 editor_options: 
   markdown: 
     wrap: 72
 ---
+
+* Note: If chunks do not run, you may have to uncomment package installation or other lines *
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -437,7 +439,7 @@ data.table::fwrite(df3, "sample_large.csv")
 
 # base
 
-```{r base}
+```{r base-readcsv}
 system.time(read.csv <- read.csv("sample_large.csv", stringsAsFactors =
 FALSE))
 
@@ -445,7 +447,7 @@ FALSE))
 
 # readr (need to assign to new data.frame)
 
-```{r readr}
+```{r readr-readcsv}
 library(readr)
 system.time(read_csv <- read_csv("sample_large.csv", progress = FALSE))
 
@@ -453,9 +455,9 @@ system.time(read_csv <- read_csv("sample_large.csv", progress = FALSE))
 
 # data.table
 
-```{r data.table}
+```{r data.table-readcsv}
 library(data.table)
-system.time(fread \<- fread("sample_large.csv"))
+system.time(fread <- fread("sample_large.csv"))
 
 ```
 
@@ -472,21 +474,24 @@ fread("pigeon-racing.csv", select = c("Breeder", "Speed"))
 # A 4th Way!
 
 ```{r vroom}
-library(vroom)
-system.time(vroom <- vroom("sample_large.csv"))
-```
-
-```{r}
-results_vroom <- microbenchmark(
-read.csv = read.csv(file = here("static", "data", "sim-data-large.csv")),
-read_csv = read_csv(file = here("static", "data", "sim-data-large.csv")),
-vroom = vroom::vroom(file = here("static", "data", "sim-data-large.csv"))
-)
-
+#library(vroom)
+#system.time(vroom <- vroom("sample_large.csv"))
 ```
 
 ```{r}
 library(microbenchmark)
+library(here)
+
+#results_vroom <- microbenchmark(
+#read.csv = read.csv(file = here("static", "data", "sim-data-large.csv")),
+#read_csv = read_csv(file = here("static", "data", "sim-data-large.csv")),
+#vroom = vroom::vroom(file = here("static", "data", "sim-data-large.csv"))
+#)
+
+```
+
+```{r}
+
 results <- microbenchmark(
 read.csv = read.csv(file = "sample_medium.csv", stringsAsFactors =
 FALSE),
@@ -499,7 +504,7 @@ times = 10
 library(ggplot2)
 
 autoplot(object = results) +
-scale_y\_log10() +
+scale_y_log10() +
 labs(y = "Time [milliseconds], logged")
 ```
 
@@ -522,7 +527,7 @@ df <- data.frame(column_1 = c(1, 2, 3),
                  stringsAsFactors = F)
 df
 
-#pg <- fread("pigeon-racing.csv")
+pg <- fread("pigeon-racing.csv")
 ```
 
 # Subset Rows
@@ -607,7 +612,7 @@ df[df$column_1 == 2, c("column_2", "column_3")]
 
 # renaming column base
 
-```{r base}
+```{r base-renamecols}
 
 df <- data.frame(column_1 = c(1, 2, 3), column_b = c("A", "B", "C"))
 print(df)
@@ -617,7 +622,7 @@ print(df)
 
 # renaming column dplyr
 
-```{r dplyr}
+```{r dplyr-renamecols}
 library(dplyr)
 df <- data.frame(column_1 = c(1, 2, 3), column_b = c("A", "B", "C"))
 print(df)
@@ -627,7 +632,7 @@ print(df)
 
 # renaming column data.table
 
-```{r data.table}
+```{r data.table-renamecols}
 library(data.table)
 df <- data.frame(column_1 = c(1, 2, 3), column_b = c("A", "B", "C"))
 print(df)
@@ -641,7 +646,7 @@ library(dplyr)
 pg <- fread("pigeon-racing.csv")
 ```
 
-```{r base}
+```{r base-summary}
 aggregate(Ent ~ Breeder, pg, length)
 
 table(pg$Breeder)
@@ -649,14 +654,14 @@ table(pg$Breeder)
 data.frame(table(pg$Breeder))
 ```
 
-```{r dplyr}
+```{r dplyr-summary}
 count(pg, Breeder)
 
 #or with magrittr piping
 pg %>% count(Breeder)
 ```
 
-```{r data.table}
+```{r data.table-summary}
 #dt[filter, select, group]
 pg[, .N, Breeder]
 ```

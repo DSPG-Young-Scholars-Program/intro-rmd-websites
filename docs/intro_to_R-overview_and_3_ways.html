@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="José Bayoán Santiago Calderón and Aaron Schroeder" />
+
+<meta name="date" content="2019-06-06" />
+
+<title>Introduction to R</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Intro to R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="intro_to_R-overview_and_3_ways.html">The 3 Ways of R</a>
+    </li>
+    <li>
+      <a href="intro_to_R-applied_ggplot2.html">Applied R: ggplot2</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="presentation.html">The Website Presentation</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction to R</h1>
+<h4 class="author">José Bayoán Santiago Calderón and Aaron
+Schroeder</h4>
+<h4 class="date">2019-06-06</h4>
+
+</div>
+
+
+<ul>
+<li>Note: If chunks do not run, you may have to uncomment package
+installation or other lines *</li>
+</ul>
+<div id="introduction-to-r-markdown" class="section level2">
+<h2>Introduction to R markdown</h2>
+<p>What is <a
+href="https://en.wikipedia.org/wiki/Literate_programming">Literate
+programming</a>?</p>
+<blockquote>
+<p>“Programs are meant to be read by humans and only incidentally for
+computers to execute.” ― Donald Knuth</p>
+</blockquote>
+<p>R markdowns are programs that mix a markup language (i.e., markdown)
+with programming languages (e.g., R) to best communicate compared to
+having either one in isolation. Many markdown features are implemented
+such as <strong>bold</strong>, <em>italics</em>, <strong><em>bold and
+italics</em></strong> or hyperlinks such as the previous example. It is
+easily integrated withing <a href="https://www.rstudio.com/">RStudio</a>
+the flagship integrated development environment (<a
+href="https://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a>)
+for R.</p>
+</div>
+<div id="setting-up-rstudio" class="section level2">
+<h2>Setting up RStudio</h2>
+<ul>
+<li>Global options for RStudio</li>
+</ul>
+<p>Many newcomers and advanced users alike can benefit from customizing
+their RStudio global options. For example, I personally like a dark dark
+mode theme such as Tomorrow Night 80. Many options under the Code menu
+can help you adhere to best practices, catch issues, or follow a
+standard coding style.</p>
+<ul>
+<li>The <code>.Rprofile</code> in the HOME directory can be used to
+modify startup behavior</li>
+</ul>
+<p>For example, my <code>.Rprofile</code> file has the following
+code</p>
+<pre class="r"><code>Sys.setenv(TZ = &#39;EST&#39;)
+if (interactive()) {
+  try(expr = fortunes::fortune(), silent = TRUE)
+  }
+cat(&quot;Welcome, Nosferican.\nLogged at: &quot;, as.character(Sys.time()))</code></pre>
+<pre><code>## Welcome, Nosferican.
+## Logged at:  2023-07-06 09:07:17</code></pre>
+<p>which displays an R fortune cookie, my username and current time when
+I start a session. The fortune cookie is a random piece of R
+history/culture very useful to understand the philosophy behind the
+project.</p>
+<ul>
+<li>The <code>.Renviron</code> file can be used to define variables
+accessible during your session</li>
+</ul>
+<p>For example, rather than writing my database credentials and making
+those avaiable in the code I can specify these as environmental
+variables I can access without compromising these</p>
+<pre class="r"><code>db_userid = &quot;[your computing ID]&quot;
+db_pwd = &quot;[your database pwd]&quot;</code></pre>
+</div>
+<div id="setting-up-your-environment-housekeeping"
+class="section level2">
+<h2>Setting up your environment (Housekeeping)</h2>
+<p>For the following lesson, we will be using various functionality
+available in R packages. The following code will make the namespace
+(e.g., functions) available for us to use.</p>
+<p>The next block of code will provide all the functionality we will be
+using during this lesson</p>
+<pre class="r"><code>library(magrittr)</code></pre>
+<pre><code>## Warning: package &#39;magrittr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;magrittr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     set_names</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     extract</code></pre>
+<pre class="r"><code>library(stringr)
+library(forcats)
+library(lubridate)
+library(ggplot2)</code></pre>
+</div>
+<div id="atomic-data-types" class="section level2">
+<h2>Atomic data types</h2>
+<p>R has six atomic data types:</p>
+<ul>
+<li><code>logical</code></li>
+<li><code>integer</code></li>
+<li><code>numeric</code> (alias for double precision)</li>
+<li><code>complex</code></li>
+<li><code>character</code></li>
+<li><code>raw</code></li>
+</ul>
+<div id="logical" class="section level3">
+<h3>Logical</h3>
+<pre class="r"><code>x &lt;- c(NA, FALSE, TRUE)
+names(x = x) &lt;- as.character(x = x)
+x</code></pre>
+<pre><code>##  &lt;NA&gt; FALSE  TRUE 
+##    NA FALSE  TRUE</code></pre>
+<p><code>&amp;</code> Table</p>
+<pre class="r"><code>outer(X = x, Y = x, FUN = &quot;&amp;&quot;)</code></pre>
+<pre><code>##        &lt;NA&gt; FALSE  TRUE
+## &lt;NA&gt;     NA FALSE    NA
+## FALSE FALSE FALSE FALSE
+## TRUE     NA FALSE  TRUE</code></pre>
+<p><code>|</code> Table</p>
+<pre class="r"><code>outer(X = x, Y = x, FUN = &quot;|&quot;)</code></pre>
+<pre><code>##       &lt;NA&gt; FALSE TRUE
+## &lt;NA&gt;    NA    NA TRUE
+## FALSE   NA FALSE TRUE
+## TRUE  TRUE  TRUE TRUE</code></pre>
+<p><code>xor</code> Table</p>
+<pre class="r"><code>outer(X = x, Y = x, FUN = &quot;xor&quot;)</code></pre>
+<pre><code>##       &lt;NA&gt; FALSE  TRUE
+## &lt;NA&gt;    NA    NA    NA
+## FALSE   NA FALSE  TRUE
+## TRUE    NA  TRUE FALSE</code></pre>
+<p>Negation</p>
+<pre class="r"><code>!TRUE</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>!FALSE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Logical interpretation of integers/numeric</p>
+<pre class="r"><code>TRUE &amp; 0 # (TRUE &amp; (0 == 0))</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>FALSE | -2 # (FALSE | (-2 == 0))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="integer" class="section level3">
+<h3>Integer</h3>
+<pre class="r"><code>x = 2L
+y = 3L
++x # Positive sign</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>-x # Negative sign</code></pre>
+<pre><code>## [1] -2</code></pre>
+<pre class="r"><code>abs(x = x)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>x + y</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code>x - y</code></pre>
+<pre><code>## [1] -1</code></pre>
+<pre class="r"><code>x * y</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code>x / y</code></pre>
+<pre><code>## [1] 0.6666667</code></pre>
+<pre class="r"><code>x^y</code></pre>
+<pre><code>## [1] 8</code></pre>
+<pre class="r"><code>sqrt(x = x)</code></pre>
+<pre><code>## [1] 1.414214</code></pre>
+<pre class="r"><code>x %% y # Modulus</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>x %/% y # Integer division</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>log(x = x)</code></pre>
+<pre><code>## [1] 0.6931472</code></pre>
+<pre class="r"><code>exp(x = x)</code></pre>
+<pre><code>## [1] 7.389056</code></pre>
+<pre class="r"><code>factorial(x = x)</code></pre>
+<pre><code>## [1] 2</code></pre>
+</div>
+<div id="numeric" class="section level3">
+<h3>Numeric</h3>
+<pre class="r"><code>x = 2.5
+y = 3.2</code></pre>
+<pre class="r"><code>+x # Positive sign</code></pre>
+<pre><code>## [1] 2.5</code></pre>
+<pre class="r"><code>-x # Negative sign</code></pre>
+<pre><code>## [1] -2.5</code></pre>
+<pre class="r"><code>abs(x = x)</code></pre>
+<pre><code>## [1] 2.5</code></pre>
+<pre class="r"><code>x + y</code></pre>
+<pre><code>## [1] 5.7</code></pre>
+<pre class="r"><code>x - y</code></pre>
+<pre><code>## [1] -0.7</code></pre>
+<pre class="r"><code>x * y</code></pre>
+<pre><code>## [1] 8</code></pre>
+<pre class="r"><code>x / y</code></pre>
+<pre><code>## [1] 0.78125</code></pre>
+<pre class="r"><code>x^y</code></pre>
+<pre><code>## [1] 18.76757</code></pre>
+<pre class="r"><code>sqrt(x = x) </code></pre>
+<pre><code>## [1] 1.581139</code></pre>
+<pre class="r"><code>x %% y # Modulus</code></pre>
+<pre><code>## [1] 2.5</code></pre>
+<pre class="r"><code>x %/% y # Integer division</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>log(x = x) # Log (defaults to natual log)</code></pre>
+<pre><code>## [1] 0.9162907</code></pre>
+<pre class="r"><code>exp(x = x)</code></pre>
+<pre><code>## [1] 12.18249</code></pre>
+<pre class="r"><code>factorial(x = x)</code></pre>
+<pre><code>## [1] 3.323351</code></pre>
+<pre class="r"><code>round(x = x, digits = 2L)</code></pre>
+<pre><code>## [1] 2.5</code></pre>
+<pre class="r"><code>floor(x = x)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>ceiling(x = x)</code></pre>
+<pre><code>## [1] 3</code></pre>
+</div>
+<div id="complex" class="section level3">
+<h3>Complex</h3>
+<pre class="r"><code>x = 2 + 1i
+y = 3 + 1i</code></pre>
+<pre class="r"><code>+x # Positive sign</code></pre>
+<pre><code>## [1] 2+1i</code></pre>
+<pre class="r"><code>-x # Negative sign</code></pre>
+<pre><code>## [1] -2-1i</code></pre>
+<pre class="r"><code>abs(x = x)</code></pre>
+<pre><code>## [1] 2.236068</code></pre>
+<pre class="r"><code>x + y</code></pre>
+<pre><code>## [1] 5+2i</code></pre>
+<pre class="r"><code>x - y</code></pre>
+<pre><code>## [1] -1+0i</code></pre>
+<pre class="r"><code>x * y</code></pre>
+<pre><code>## [1] 5+5i</code></pre>
+<pre class="r"><code>x / y</code></pre>
+<pre><code>## [1] 0.7+0.1i</code></pre>
+<pre class="r"><code>x^y</code></pre>
+<pre><code>## [1] -4.113793+5.703463i</code></pre>
+<pre class="r"><code>sqrt(x = x)</code></pre>
+<pre><code>## [1] 1.455347+0.343561i</code></pre>
+<pre class="r"><code>log(x = x) # Log (defaults to natual log)</code></pre>
+<pre><code>## [1] 0.804719+0.4636476i</code></pre>
+<pre class="r"><code>exp(x = x)</code></pre>
+<pre><code>## [1] 3.992324+6.217676i</code></pre>
+<pre class="r"><code>x == y</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>is.complex(x = x)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>Re(z = x)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>Im(z = x)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>Mod(z = x)</code></pre>
+<pre><code>## [1] 2.236068</code></pre>
+<pre class="r"><code>Arg(z = x)</code></pre>
+<pre><code>## [1] 0.4636476</code></pre>
+<pre class="r"><code>Conj(z = x)</code></pre>
+<pre><code>## [1] 2-1i</code></pre>
+</div>
+<div id="character" class="section level3">
+<h3>Character</h3>
+<pre class="r"><code>x &lt;- &quot;\&quot;R doesn&#39;t like emojis :(, Julia does.\&quot; - Bayoán (史志鼎)&quot;
+str_detect(string = x, pattern = &quot;Bayoán&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>str_detect(string = x, pattern = &quot;Nosferican&quot;)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>str_extract(string = x, pattern = &quot;(?&lt;=\&quot; - ).*&quot;)</code></pre>
+<pre><code>## [1] &quot;Bayoán (史志鼎)&quot;</code></pre>
+<pre class="r"><code>str_sub(string = x, start = 28L, end = 32L)</code></pre>
+<pre><code>## [1] &quot;Julia&quot;</code></pre>
+<pre class="r"><code>str_replace(string = x, pattern = &quot;(?&lt;=\&quot; - ).*&quot;, &quot;Me&quot;)</code></pre>
+<pre><code>## [1] &quot;\&quot;R doesn&#39;t like emojis :(, Julia does.\&quot; - Me&quot;</code></pre>
+<pre class="r"><code>str_remove(string = x, pattern = &quot;e&quot;)</code></pre>
+<pre><code>## [1] &quot;\&quot;R dosn&#39;t like emojis :(, Julia does.\&quot; - Bayoán (史志鼎)&quot;</code></pre>
+<pre class="r"><code>str_replace_all(string = x, pattern = &quot;e&quot;, replace = &quot;E&quot;)</code></pre>
+<pre><code>## [1] &quot;\&quot;R doEsn&#39;t likE Emojis :(, Julia doEs.\&quot; - Bayoán (史志鼎)&quot;</code></pre>
+<pre class="r"><code>str_c(&quot;This a fine quote.&quot;, x, sep = &quot;  &quot;)</code></pre>
+<pre><code>## [1] &quot;This a fine quote.  \&quot;R doesn&#39;t like emojis :(, Julia does.\&quot; - Bayoán (史志鼎)&quot;</code></pre>
+</div>
+</div>
+<div id="collections" class="section level2">
+<h2>Collections</h2>
+<div id="arrays" class="section level3">
+<h3>Arrays</h3>
+<p>Arrays are collections of homogeneous data types. The most common
+types are the one dimensional array (<code>vector</code>) and the two
+dimensional array (<code>matrix</code>).</p>
+<pre class="r"><code>vector(mode = &quot;logical&quot;, length = 2L)</code></pre>
+<pre><code>## [1] FALSE FALSE</code></pre>
+<pre class="r"><code>vector(mode = &quot;character&quot;, length = 5L)</code></pre>
+<pre><code>## [1] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot;</code></pre>
+<pre class="r"><code>vector(mode = &quot;numeric&quot;, length = 3L)</code></pre>
+<pre><code>## [1] 0 0 0</code></pre>
+<pre class="r"><code>vector(mode = &quot;integer&quot;, length = 4L)</code></pre>
+<pre><code>## [1] 0 0 0 0</code></pre>
+<pre class="r"><code>x &lt;- 1:10
+str(object = x)</code></pre>
+<pre><code>##  int [1:10] 1 2 3 4 5 6 7 8 9 10</code></pre>
+<pre class="r"><code>summary(object = x)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    3.25    5.50    5.50    7.75   10.00</code></pre>
+<pre class="r"><code>table(origininal_object = x)</code></pre>
+<pre><code>## origininal_object
+##  1  2  3  4  5  6  7  8  9 10 
+##  1  1  1  1  1  1  1  1  1  1</code></pre>
+<pre class="r"><code>x[2:5] &lt;- 1L
+table(modified_object = x)</code></pre>
+<pre><code>## modified_object
+##  1  6  7  8  9 10 
+##  5  1  1  1  1  1</code></pre>
+<pre class="r"><code>x[11] &lt;- NA
+typeof(x)</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>sort(x = x, decreasing = TRUE, na.last = TRUE) # default values TRUE and NA</code></pre>
+<pre><code>##  [1] 10  9  8  7  6  1  1  1  1  1 NA</code></pre>
+<pre class="r"><code>x[13] &lt;- &quot;A&quot;
+x</code></pre>
+<pre><code>##  [1] &quot;1&quot;  &quot;1&quot;  &quot;1&quot;  &quot;1&quot;  &quot;1&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; NA   NA   &quot;A&quot;</code></pre>
+<pre class="r"><code>is.vector(x = x)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+<div id="matrices" class="section level2">
+<h2>Matrices</h2>
+<pre class="r"><code>x &lt;- matrix(data = 1:16,
+            nrow = 4L,
+            ncol = 4L,
+            dimnames = list(LETTERS[1:4], letters[1:4]))
+x + 2 * x</code></pre>
+<pre><code>##    a  b  c  d
+## A  3 15 27 39
+## B  6 18 30 42
+## C  9 21 33 45
+## D 12 24 36 48</code></pre>
+<pre class="r"><code>x %*% x</code></pre>
+<pre><code>##     a   b   c   d
+## A  90 202 314 426
+## B 100 228 356 484
+## C 110 254 398 542
+## D 120 280 440 600</code></pre>
+<pre class="r"><code>str(object = x)</code></pre>
+<pre><code>##  int [1:4, 1:4] 1 2 3 4 5 6 7 8 9 10 ...
+##  - attr(*, &quot;dimnames&quot;)=List of 2
+##   ..$ : chr [1:4] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot;
+##   ..$ : chr [1:4] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</code></pre>
+<pre class="r"><code>summary(object = x)</code></pre>
+<pre><code>##        a              b              c               d        
+##  Min.   :1.00   Min.   :5.00   Min.   : 9.00   Min.   :13.00  
+##  1st Qu.:1.75   1st Qu.:5.75   1st Qu.: 9.75   1st Qu.:13.75  
+##  Median :2.50   Median :6.50   Median :10.50   Median :14.50  
+##  Mean   :2.50   Mean   :6.50   Mean   :10.50   Mean   :14.50  
+##  3rd Qu.:3.25   3rd Qu.:7.25   3rd Qu.:11.25   3rd Qu.:15.25  
+##  Max.   :4.00   Max.   :8.00   Max.   :12.00   Max.   :16.00</code></pre>
+<pre class="r"><code>table(x)</code></pre>
+<pre><code>## x
+##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 
+##  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1</code></pre>
+<pre class="r"><code>x[3, 2] &lt;- NA
+x</code></pre>
+<pre><code>##   a  b  c  d
+## A 1  5  9 13
+## B 2  6 10 14
+## C 3 NA 11 15
+## D 4  8 12 16</code></pre>
+</div>
+<div id="arrays-1" class="section level2">
+<h2>Arrays</h2>
+<pre class="r"><code>x &lt;- array(data = 1:3, dim = c(2L, 4L, 3L))
+x</code></pre>
+<pre><code>## , , 1
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    3    2    1
+## [2,]    2    1    3    2
+## 
+## , , 2
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    3    2    1    3
+## [2,]    1    3    2    1
+## 
+## , , 3
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    2    1    3    2
+## [2,]    3    2    1    3</code></pre>
+<pre class="r"><code>str(object = x)</code></pre>
+<pre><code>##  int [1:2, 1:4, 1:3] 1 2 3 1 2 3 1 2 3 1 ...</code></pre>
+<pre class="r"><code>dim(x = x)</code></pre>
+<pre><code>## [1] 2 4 3</code></pre>
+<div id="lists" class="section level3">
+<h3>Lists</h3>
+<pre class="r"><code>x = list(x = 1:5, y = TRUE, z = c(&quot;A&quot;, &quot;Z&quot;))
+str(object = x)</code></pre>
+<pre><code>## List of 3
+##  $ x: int [1:5] 1 2 3 4 5
+##  $ y: logi TRUE
+##  $ z: chr [1:2] &quot;A&quot; &quot;Z&quot;</code></pre>
+<pre class="r"><code>x$z</code></pre>
+<pre><code>## [1] &quot;A&quot; &quot;Z&quot;</code></pre>
+<pre class="r"><code>x$A &lt;- 23L
+x</code></pre>
+<pre><code>## $x
+## [1] 1 2 3 4 5
+## 
+## $y
+## [1] TRUE
+## 
+## $z
+## [1] &quot;A&quot; &quot;Z&quot;
+## 
+## $A
+## [1] 23</code></pre>
+<pre class="r"><code>x[1L]</code></pre>
+<pre><code>## $x
+## [1] 1 2 3 4 5</code></pre>
+<pre class="r"><code>x[[1L]]</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<pre class="r"><code>x[[4]] &lt;- list(a = 3, b = 2)
+x</code></pre>
+<pre><code>## $x
+## [1] 1 2 3 4 5
+## 
+## $y
+## [1] TRUE
+## 
+## $z
+## [1] &quot;A&quot; &quot;Z&quot;
+## 
+## $A
+## $A$a
+## [1] 3
+## 
+## $A$b
+## [1] 2</code></pre>
+<pre class="r"><code>x$A$b</code></pre>
+<pre><code>## [1] 2</code></pre>
+</div>
+</div>
+<div id="structs" class="section level2">
+<h2>Structs</h2>
+<p>Date time objects are structs can wrap an atomic data element for
+special functionality</p>
+<pre class="r"><code>x &lt;- now()
+year(x = x)</code></pre>
+<pre><code>## [1] 2023</code></pre>
+<pre class="r"><code>month(x = x)</code></pre>
+<pre><code>## [1] 7</code></pre>
+<pre class="r"><code>day(x = x)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code>hour(x = x)</code></pre>
+<pre><code>## [1] 9</code></pre>
+<pre class="r"><code>minute(x = x)</code></pre>
+<pre><code>## [1] 7</code></pre>
+<pre class="r"><code>seconds(x = 1)</code></pre>
+<pre><code>## [1] &quot;1S&quot;</code></pre>
+<pre class="r"><code>x %m+% months(x = 1L, abbreviate = TRUE)</code></pre>
+<pre><code>## [1] &quot;2023-08-06 09:07:17 EST&quot;</code></pre>
+<p>Named vectors are an example of a struct with more than one atomic
+data type element</p>
+<pre class="r"><code>x &lt;- c(a = 1, b = 2)
+str(object = x)</code></pre>
+<pre><code>##  Named num [1:2] 1 2
+##  - attr(*, &quot;names&quot;)= chr [1:2] &quot;a&quot; &quot;b&quot;</code></pre>
+<pre class="r"><code>names(x = x)</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot;</code></pre>
+<p>One last example includes categorical or factor variables</p>
+<pre class="r"><code>set.seed(seed = 0L)
+x &lt;- as_factor(x = sample(x = letters[1:5], size = 100L, replace = TRUE))
+str(x)</code></pre>
+<pre><code>##  Factor w/ 5 levels &quot;a&quot;,&quot;d&quot;,&quot;b&quot;,&quot;e&quot;,..: 1 2 1 3 4 5 3 5 5 1 ...</code></pre>
+<pre class="r"><code>x[10L]</code></pre>
+<pre><code>## [1] a
+## Levels: a d b e c</code></pre>
+<pre class="r"><code>levels(x = x)</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;d&quot; &quot;b&quot; &quot;e&quot; &quot;c&quot;</code></pre>
+<pre class="r"><code>ggplot(mapping = aes(x = x)) +
+  geom_bar() +
+  labs(title = &quot;Histogram&quot;,
+       x = &quot;Category&quot;,
+       y = &quot;Count&quot;) +
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="intro_to_R-overview_and_3_ways_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="the-3-ways-of-r-or-becoming-a-better-code-googler-googler"
+class="section level1">
+<h1>“The 3 Ways of R” or Becoming a Better Code Googler (GoogleR?)</h1>
+<p>author: Aaron D. Schroeder date: 6/5/2020 autosize: true</p>
+</div>
+<div id="the-r-language---multiple-approaches" class="section level1">
+<h1>The R Language - Multiple Approaches</h1>
+</div>
+<div id="used-many-different-ways-including" class="section level1">
+<h1>Used many different ways, including</h1>
+<ul>
+<li><strong>Procedural programming (PP)</strong>
+<ul>
+<li>HOW MOST EVERYBODY STARTS, also known as inline programming takes a
+top-down approach. Writing a list of instructions step by step.</li>
+</ul></li>
+<li><strong>Object-oriented programming (OOP)</strong>
+<ul>
+<li>encapsulating data and behavior into objects. An OOP application
+will use a collection of objects which knows how to perform certain
+actions and how to interact with other elements of the application.</li>
+</ul></li>
+<li><strong>Functional programming (FP)</strong>
+<ul>
+<li>WHAT MOST PEOPLE GET TO AFTER PROCEDURAL, passing data from function
+to function to function to get a result. Functions are treated as data,
+meaning you can use them as parameters, return them, build functions
+from other functions, etc.</li>
+</ul></li>
+</ul>
+</div>
+<div id="like-javascript" class="section level1">
+<h1>Like Javascript</h1>
+<div id="can-be-also-be-used-as-pp-oop-or-fp" class="section level3">
+<h3>Can be also be used as PP, OOP, or FP</h3>
+</div>
+<div id="frameworks-are-created-to-make-it-easier"
+class="section level3">
+<h3>‘Frameworks’ are created to make it easier</h3>
+<ul>
+<li><strong>React</strong></li>
+<li><strong>Vue.js</strong></li>
+<li><strong>Ember.js</strong></li>
+<li><strong>Meteor.js</strong></li>
+</ul>
+</div>
+<div id="and-many-more-but-a-single-framework-can-lock-you-in"
+class="section level3">
+<h3>And many more! BUT, A Single Framework can Lock You In!</h3>
+</div>
+<div
+id="problem-people-are-only-learning-how-to-do-javascript-the-react-or-vue.js-or-way---very-limiting---especially-for-using-other-peoples-code"
+class="section level3">
+<h3>PROBLEM! People are only learning how to do Javascript the “React”
+or “Vue.js” or … way - VERY LIMITING - ESPECIALLY FOR USING OTHER
+PEOPLE’S CODE!</h3>
+</div>
+</div>
+<div id="r-frameworks" class="section level1">
+<h1>R ‘Frameworks’</h1>
+<div
+id="while-not-exactly-frameworks-r-has-the-same-issue-in-that-different-coding-approaches-have-emerged"
+class="section level3">
+<h3>While not exactly “Frameworks”, R has the same issue in that
+different coding “approaches” have emerged</h3>
+<ul>
+<li><strong>base</strong>
+<ul>
+<li>championed purists who like to do things the old-fashioned way
+(reminds them of the good-ol-days before S was renamed to R)</li>
+<li>if you know what is going on “under the hood” you can write susinct
+and fast code, but if you don’t…</li>
+</ul></li>
+<li><strong>tidy</strong> (tibl, dplyr, stringr, many many more)
+<ul>
+<li>championed by the ‘followers of the Wickham Way’, I’m no going to
+say it’s a cult, but…</li>
+<li>an “opionated” way to do functional programming that is easier to
+pick up than base</li>
+<li>get all data to tidy format, then process in an easy to follow
+chain</li>
+<li>way different than base and rather verbose</li>
+</ul></li>
+<li><strong>datatable</strong>
+<ul>
+<li>championed by grumpy programmers who value speed and sussinctness
+most</li>
+<li>actually just a very fast data structure that can be used with tidy
+or anything else</li>
+<li>however, has it’s own syntax that can be significantly more
+susinct</li>
+</ul></li>
+<li><strong>hybrid</strong>
+<ul>
+<li>combine the speed of data.table with the programming style of
+tidy</li>
+<li>more and more packages are appearing to make this possible</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="need-to-be-bitri-lingual" class="section level1">
+<h1>Need to be Bi/Tri Lingual!</h1>
+</div>
+<div
+id="if-you-are-going-to-be-a-great-r-code-googler-which-you-want-to-be-you-need-to-be-able-to-at-least-read-and-understand-what-is-going-on-in-the-code-samples-you-find-regardless-of-the-approach-used"
+class="section level1">
+<h1>If you are going to be a great R Code Googler (which you want to
+be!) you need to be able to at least read and understand what is going
+on in the code samples you find, regardless of the approach used!</h1>
+</div>
+<div id="todays-objectives" class="section level1">
+<h1>Today’s Objectives</h1>
+</div>
+<div id="so-for-today-our-objectives-are-to" class="section level1">
+<h1>So, for today our objectives are to</h1>
+<ul>
+<li>Get an introduction to very simple versions of the different
+approaches to
+<ul>
+<li>reading data into R</li>
+<li>susbsetting data (selecting &amp; filtering)</li>
+<li>renaming columns</li>
+<li>piping</li>
+</ul></li>
+<li>Send you off to the interactive DataCamp tutorials to learn more and
+practice
+<ul>
+<li>Data Manipulation with dplyr</li>
+<li>Data Manipulation with data.table</li>
+</ul></li>
+</ul>
+<pre class="r"><code>df1 &lt;- data.frame(a = seq(1,16,by=2), b = LETTERS[1:8], x=month.abb[1:8], y = sample(10:20,10000, replace = TRUE), z=letters[1:8])
+data.table::fwrite(df1, &quot;sample_small.csv&quot;)
+df2 &lt;- data.frame(a = seq(1,16,by=2), b = LETTERS[1:8], x=month.abb[1:8], y = sample(10:20,1000000, replace = TRUE), z=letters[1:8])
+data.table::fwrite(df2, &quot;sample_medium.csv&quot;)
+df3 &lt;- data.frame(a = seq(1,16,by=2), b = LETTERS[1:8], x=month.abb[1:8], y = sample(10:20,10000000, replace = TRUE), z=letters[1:8])
+data.table::fwrite(df3, &quot;sample_large.csv&quot;)</code></pre>
+</div>
+<div id="base" class="section level1">
+<h1>base</h1>
+<pre class="r"><code>system.time(read.csv &lt;- read.csv(&quot;sample_large.csv&quot;, stringsAsFactors =
+FALSE))</code></pre>
+<pre><code>##    user  system elapsed 
+##   7.469   0.540   8.057</code></pre>
+</div>
+<div id="readr-need-to-assign-to-new-data.frame" class="section level1">
+<h1>readr (need to assign to new data.frame)</h1>
+<pre class="r"><code>library(readr)
+system.time(read_csv &lt;- read_csv(&quot;sample_large.csv&quot;, progress = FALSE))</code></pre>
+<pre><code>## Rows: 10000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>##    user  system elapsed 
+##   8.059   0.274   3.034</code></pre>
+</div>
+<div id="data.table" class="section level1">
+<h1>data.table</h1>
+<pre class="r"><code>library(data.table)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;data.table&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:lubridate&#39;:
+## 
+##     hour, isoweek, mday, minute, month, quarter, second, wday, week,
+##     yday, year</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     between, first, last</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     transpose</code></pre>
+<pre class="r"><code>system.time(fread &lt;- fread(&quot;sample_large.csv&quot;))</code></pre>
+<pre><code>##    user  system elapsed 
+##   1.005   0.059   1.072</code></pre>
+</div>
+<div id="more-advanced-data.table" class="section level1">
+<h1>more advanced data.table</h1>
+<pre class="r"><code>fread(&quot;pigeon-racing.csv&quot;, drop = 4:11)</code></pre>
+<pre><code>##      Pos              Breeder          Pigeon
+##   1:   1        Texas Outlaws 19633-AU15-FOYS
+##   2:   2       Junior Juanich   0402-AU15-JRL
+##   3:   3    Jerry Allensworth  0404-AU15-VITA
+##   4:   4          Alias-Alias  2013-AU15-ALIA
+##   5:   5         Greg Glazier   5749-AU15-SLI
+##  ---                                         
+## 396: 396      Hutchins/Milner  2496-AU15-VITA
+## 397: 397              Twin200  7799-AU15-VITA
+## 398: 398     Mayberry Classic   5508-AU15-MAC
+## 399: 399 Sierra Ranch Classic  0519-AU15-SIER
+## 400: 400    Hi-Cal Connection  0798-AU15-HAWA</code></pre>
+<pre class="r"><code>fread(&quot;pigeon-racing.csv&quot;, select = c(1, 2, 3))</code></pre>
+<pre><code>##      Pos              Breeder          Pigeon
+##   1:   1        Texas Outlaws 19633-AU15-FOYS
+##   2:   2       Junior Juanich   0402-AU15-JRL
+##   3:   3    Jerry Allensworth  0404-AU15-VITA
+##   4:   4          Alias-Alias  2013-AU15-ALIA
+##   5:   5         Greg Glazier   5749-AU15-SLI
+##  ---                                         
+## 396: 396      Hutchins/Milner  2496-AU15-VITA
+## 397: 397              Twin200  7799-AU15-VITA
+## 398: 398     Mayberry Classic   5508-AU15-MAC
+## 399: 399 Sierra Ranch Classic  0519-AU15-SIER
+## 400: 400    Hi-Cal Connection  0798-AU15-HAWA</code></pre>
+<pre class="r"><code>fread(&quot;pigeon-racing.csv&quot;, drop = c(&quot;Name&quot;, &quot;Arrival&quot;))</code></pre>
+<pre><code>##      Pos              Breeder          Pigeon Color Sex Ent   Speed  To Win
+##   1:   1        Texas Outlaws 19633-AU15-FOYS  BCWF   H   1 172.155 0:00:00
+##   2:   2       Junior Juanich   0402-AU15-JRL  SIWF   H   1 163.569 0:05:21
+##   3:   3    Jerry Allensworth  0404-AU15-VITA    BB   H   1 163.442 0:05:27
+##   4:   4          Alias-Alias  2013-AU15-ALIA  BBSP   H   1 163.392 0:05:28
+##   5:   5         Greg Glazier   5749-AU15-SLI    BC   H   1 163.366 0:05:30
+##  ---                                                                       
+## 396: 396      Hutchins/Milner  2496-AU15-VITA    BB   H   5  90.901 1:31:23
+## 397: 397              Twin200  7799-AU15-VITA   SIL   H   2  87.817 1:38:10
+## 398: 398     Mayberry Classic   5508-AU15-MAC  BBSP   H   2  83.929 1:47:28
+## 399: 399 Sierra Ranch Classic  0519-AU15-SIER    BC   H   6  78.286 2:02:34
+## 400: 400    Hi-Cal Connection  0798-AU15-HAWA    BB   H   5  76.677 2:07:18
+##      Eligible
+##   1:      Yes
+##   2:      Yes
+##   3:      Yes
+##   4:      Yes
+##   5:      Yes
+##  ---         
+## 396:      Yes
+## 397:      Yes
+## 398:      Yes
+## 399:      Yes
+## 400:      Yes</code></pre>
+<pre class="r"><code>fread(&quot;pigeon-racing.csv&quot;, select = c(&quot;Breeder&quot;, &quot;Speed&quot;))</code></pre>
+<pre><code>##                   Breeder   Speed
+##   1:        Texas Outlaws 172.155
+##   2:       Junior Juanich 163.569
+##   3:    Jerry Allensworth 163.442
+##   4:          Alias-Alias 163.392
+##   5:         Greg Glazier 163.366
+##  ---                             
+## 396:      Hutchins/Milner  90.901
+## 397:              Twin200  87.817
+## 398:     Mayberry Classic  83.929
+## 399: Sierra Ranch Classic  78.286
+## 400:    Hi-Cal Connection  76.677</code></pre>
+</div>
+<div id="a-4th-way" class="section level1">
+<h1>A 4th Way!</h1>
+<pre class="r"><code>#library(vroom)
+#system.time(vroom &lt;- vroom(&quot;sample_large.csv&quot;))</code></pre>
+<pre class="r"><code>library(microbenchmark)</code></pre>
+<pre><code>## Warning: package &#39;microbenchmark&#39; was built under R version 4.1.2</code></pre>
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>## here() starts at /Users/joannaschroeder/Documents/R/intro-rmd-websites</code></pre>
+<pre class="r"><code>#results_vroom &lt;- microbenchmark(
+#read.csv = read.csv(file = here(&quot;static&quot;, &quot;data&quot;, &quot;sim-data-large.csv&quot;)),
+#read_csv = read_csv(file = here(&quot;static&quot;, &quot;data&quot;, &quot;sim-data-large.csv&quot;)),
+#vroom = vroom::vroom(file = here(&quot;static&quot;, &quot;data&quot;, &quot;sim-data-large.csv&quot;))
+#)</code></pre>
+<pre class="r"><code>results &lt;- microbenchmark(
+read.csv = read.csv(file = &quot;sample_medium.csv&quot;, stringsAsFactors =
+FALSE),
+read_csv = read_csv(file = &quot;sample_medium.csv&quot;, progress = FALSE),
+fread = fread(file = &quot;sample_medium.csv&quot;),
+vroom = vroom::vroom(file = &quot;sample_medium.csv&quot;),
+times = 10
+)</code></pre>
+<pre><code>## Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.Rows: 1000000 Columns: 5── Column specification ─────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): b, x, z
+## dbl (2): a, y
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>library(ggplot2)
+
+autoplot(object = results) +
+scale_y_log10() +
+labs(y = &quot;Time [milliseconds], logged&quot;)</code></pre>
+<pre><code>## Scale for y is already present.
+## Adding another scale for y, which will replace the existing scale.</code></pre>
+<p><img src="intro_to_R-overview_and_3_ways_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div id="a-data-frame-the-basic-tabular-representation-of-data-in-r"
+class="section level2">
+<h2>A data frame, the basic tabular representation of data in R</h2>
+<pre class="r"><code>n = c(2, 3, 5) 
+s = c(&quot;aa&quot;, &quot;bb&quot;, &quot;cc&quot;) 
+b = c(TRUE, FALSE, TRUE) 
+df = data.frame(n, s, b)       # df is a data frame
+df</code></pre>
+<pre><code>##   n  s     b
+## 1 2 aa  TRUE
+## 2 3 bb FALSE
+## 3 5 cc  TRUE</code></pre>
+</div>
+<div id="create-sample-data-frame" class="section level2">
+<h2>Create Sample Data Frame</h2>
+<pre class="r"><code>df &lt;- data.frame(column_1 = c(1, 2, 3),
+                 column_2 = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+                 column_3 = c(&quot;D&quot;, &quot;E&quot;, &quot;F&quot;),
+                 stringsAsFactors = F)
+df</code></pre>
+<pre><code>##   column_1 column_2 column_3
+## 1        1        A        D
+## 2        2        B        E
+## 3        3        C        F</code></pre>
+<pre class="r"><code>pg &lt;- fread(&quot;pigeon-racing.csv&quot;)</code></pre>
+</div>
+</div>
+<div id="subset-rows" class="section level1">
+<h1>Subset Rows</h1>
+<div id="base-r" class="section level2">
+<h2>base R</h2>
+<pre class="r"><code>df[df$column_1 == 2,] # have to include df$ before column name and don&#39;t forget the comma!</code></pre>
+<pre><code>##   column_1 column_2 column_3
+## 2        2        B        E</code></pre>
+<pre class="r"><code>df[df$column_1 == 2,]</code></pre>
+<pre><code>##   column_1 column_2 column_3
+## 2        2        B        E</code></pre>
+</div>
+<div id="dplyr" class="section level2">
+<h2>dplyr</h2>
+<pre class="r"><code>library(dplyr)
+filter(df, column_1 == 2)</code></pre>
+<pre><code>##   column_1 column_2 column_3
+## 1        2        B        E</code></pre>
+<pre class="r"><code>filter(df, column_1 == 2)</code></pre>
+<pre><code>##   column_1 column_2 column_3
+## 1        2        B        E</code></pre>
+</div>
+<div id="data.table-1" class="section level2">
+<h2>data.table</h2>
+<pre class="r"><code>library(data.table)
+setDT(df) # needs to be a data.table first
+df[column_1 == 2]</code></pre>
+<pre><code>##    column_1 column_2 column_3
+## 1:        2        B        E</code></pre>
+<pre class="r"><code>df[column_1 == 2]</code></pre>
+<pre><code>##    column_1 column_2 column_3
+## 1:        2        B        E</code></pre>
+</div>
+</div>
+<div id="subset-columns" class="section level1">
+<h1>Subset Columns</h1>
+<div id="base-r-1" class="section level2">
+<h2>base R</h2>
+<pre class="r"><code>df[, c(&quot;column_2&quot;, &quot;column_3&quot;)]</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        A        D
+## 2:        B        E
+## 3:        C        F</code></pre>
+</div>
+<div id="dplyr-1" class="section level2">
+<h2>dplyr</h2>
+<pre class="r"><code>select(df, c(&quot;column_2&quot;, &quot;column_3&quot;))</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        A        D
+## 2:        B        E
+## 3:        C        F</code></pre>
+</div>
+<div id="data.table-2" class="section level2">
+<h2>data.table</h2>
+<pre class="r"><code>setDT(df) # needs to be a data.table first
+df[, .(column_2, column_3)] # the dot . is a shortcut for list()</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        A        D
+## 2:        B        E
+## 3:        C        F</code></pre>
+<pre class="r"><code>df[, .(column_2, column_3)]</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        A        D
+## 2:        B        E
+## 3:        C        F</code></pre>
+<pre class="r"><code># or just like a data.frame
+df[, c(&quot;column_2&quot;, &quot;column_3&quot;)]</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        A        D
+## 2:        B        E
+## 3:        C        F</code></pre>
+</div>
+</div>
+<div id="subset-rows-columns" class="section level1">
+<h1>Subset Rows &amp; Columns</h1>
+<div id="base-r-2" class="section level2">
+<h2>base R</h2>
+<pre class="r"><code>df[df$column_1 == 2, c(&quot;column_2&quot;, &quot;column_3&quot;)]</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        B        E</code></pre>
+</div>
+<div id="dplyr-2" class="section level2">
+<h2>dplyr</h2>
+<pre class="r"><code>library(dplyr)
+
+# two steps using the magrittr &quot;pipe&quot;
+df %&gt;%
+  filter(column_1 == 2) %&gt;%
+  select(c(&quot;column_2&quot;, &quot;column_3&quot;)) # don&#39;t need to specifcy data.frame in second step</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        B        E</code></pre>
+</div>
+<div id="data.table-3" class="section level2">
+<h2>data.table</h2>
+<pre class="r"><code>setDT(df) # needs to be a data.table first
+
+df[column_1 == 2, .(column_2, column_3)] # the dot . is a shortcut for list()</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        B        E</code></pre>
+<pre class="r"><code># or just like a data.frame
+df[df$column_1 == 2, c(&quot;column_2&quot;, &quot;column_3&quot;)]</code></pre>
+<pre><code>##    column_2 column_3
+## 1:        B        E</code></pre>
+</div>
+</div>
+<div id="renaming-column-base" class="section level1">
+<h1>renaming column base</h1>
+<pre class="r"><code>df &lt;- data.frame(column_1 = c(1, 2, 3), column_b = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;))
+print(df)</code></pre>
+<pre><code>##   column_1 column_b
+## 1        1        A
+## 2        2        B
+## 3        3        C</code></pre>
+<pre class="r"><code>names(df)[names(df) == &#39;column_b&#39;] &lt;- &#39;column_2&#39;
+print(df)</code></pre>
+<pre><code>##   column_1 column_2
+## 1        1        A
+## 2        2        B
+## 3        3        C</code></pre>
+</div>
+<div id="renaming-column-dplyr" class="section level1">
+<h1>renaming column dplyr</h1>
+<pre class="r"><code>library(dplyr)
+df &lt;- data.frame(column_1 = c(1, 2, 3), column_b = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;))
+print(df)</code></pre>
+<pre><code>##   column_1 column_b
+## 1        1        A
+## 2        2        B
+## 3        3        C</code></pre>
+<pre class="r"><code>df &lt;- dplyr::rename(df, &quot;column_2&quot; = column_b)
+print(df)</code></pre>
+<pre><code>##   column_1 column_2
+## 1        1        A
+## 2        2        B
+## 3        3        C</code></pre>
+</div>
+<div id="renaming-column-data.table" class="section level1">
+<h1>renaming column data.table</h1>
+<pre class="r"><code>library(data.table)
+df &lt;- data.frame(column_1 = c(1, 2, 3), column_b = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;))
+print(df)</code></pre>
+<pre><code>##   column_1 column_b
+## 1        1        A
+## 2        2        B
+## 3        3        C</code></pre>
+<pre class="r"><code>setnames(df, &quot;column_b&quot;, &quot;column_2&quot;)
+print(df)</code></pre>
+<pre><code>##   column_1 column_2
+## 1        1        A
+## 2        2        B
+## 3        3        C</code></pre>
+<pre class="r"><code>library(data.table)
+library(dplyr)
+pg &lt;- fread(&quot;pigeon-racing.csv&quot;)</code></pre>
+<pre class="r"><code>aggregate(Ent ~ Breeder, pg, length)</code></pre>
+<pre><code>##                    Breeder Ent
+## 1                  4-Birds   4
+## 2           7-11 Syndicate   2
+## 3               A P C Loft  12
+## 4              Alias-Alias  11
+## 5              Alonso Loft   3
+## 6           American Lofts   4
+## 7              Andy Skwiat  10
+## 8               B D P Loft   3
+## 9         Baldwin &amp; Tilson   7
+## 10             Baysideboys   3
+## 11             Bionic Loft   2
+## 12         Braden/Olivieri   2
+## 13         Bud &amp; Orie Loft   2
+## 14      Bynum Family Lofts   5
+## 15           Captain Chuck  10
+## 16          Centmeyer Loft   2
+## 17   Charlie&#39;s Little Loft   3
+## 18        Churn Creek Loft   3
+## 19      Clear Springs Loft   3
+## 20     Credeur Family Loft   2
+## 21          Crestview Loft   4
+## 22    Crowley&#39;s Ridge Loft   2
+## 23      Cypress Hills Farm   2
+## 24           Dal-Tex R P C   3
+## 25             Dave Dudley   3
+## 26            Dave Harrett   6
+## 27            Debbie Ganus   6
+## 28        Drama Queen Loft   3
+## 29               Dunn Loft   1
+## 30              E &amp; E Loft   3
+## 31           Emerson/Krass   5
+## 32          Equalizer Loft   4
+## 33             Family Loft  12
+## 34      Fisher Family Loft   5
+## 35            Flyhome Loft   2
+## 36         Flying D Loft 2   3
+## 37       Ganus Family Loft   6
+## 38        Goshentown Lofts   4
+## 39        Greek Connection   5
+## 40            Greg Glazier   4
+## 41       Hi-Cal Connection   5
+## 42         Hutchins/Milner   5
+## 43            Iv Aces Loft   2
+## 44    J &amp; M Partridge Loft   4
+## 45                  Jb &amp; D  13
+## 46                  Jerdee   6
+## 47       Jerry Allensworth   4
+## 48           Jerry Johnson   2
+## 49          Junior Juanich   6
+## 50              Kiko Arana   4
+## 51               King City   3
+## 52             Kokomo Loft   2
+## 53               Kwan Loft   4
+## 54            Leyba&#39;s Loft   3
+## 55       Little Reata Loft   6
+## 56           Loizzi/Sikora   5
+## 57           Lonestar Loft   4
+## 58        Mayberry Classic   2
+## 59       Mc Laughlin Lofts   4
+## 60              Mike Belus   2
+## 61           Miller Loft 2   1
+## 62         Milner-Mckinsey   8
+## 63              Mr. Dovely   1
+## 64           N C Syndicate   6
+## 65      Nanez Family Lofts   4
+## 66         Non Pareil Loft   4
+## 67             Oscar/Ralph   1
+## 68                P J Loft   3
+## 69            Protege Loft   4
+## 70              Rayce Loft   4
+## 71                  Redtex  12
+## 72             Rick Barker   5
+## 73 Sandstrom Brothers Loft   7
+## 74      Shang N Dennis Yoh   5
+## 75    Shawnie &amp; Lenny Loft   4
+## 76    Sierra Ranch Classic   6
+## 77      Silver Dollar Loft   2
+## 78         Skip&#39;s Janssens   5
+## 79           Stelling Loft   4
+## 80            Stenman Loft  10
+## 81              T C R Loft   5
+## 82        Terry Montgomery   2
+## 83           Texas Outlaws   4
+## 84         The Bailey Team   7
+## 85     The Brand Syndicate   5
+## 86               Tongol 11   3
+## 87       Tony Family Lofts   3
+## 88               Turk Loft   2
+## 89                 Twin200   2
+## 90          Woodsend/Perry   9</code></pre>
+<pre class="r"><code>table(pg$Breeder)</code></pre>
+<pre><code>## 
+##                 4-Birds          7-11 Syndicate              A P C Loft 
+##                       4                       2                      12 
+##             Alias-Alias             Alonso Loft          American Lofts 
+##                      11                       3                       4 
+##             Andy Skwiat              B D P Loft        Baldwin &amp; Tilson 
+##                      10                       3                       7 
+##             Baysideboys             Bionic Loft         Braden/Olivieri 
+##                       3                       2                       2 
+##         Bud &amp; Orie Loft      Bynum Family Lofts           Captain Chuck 
+##                       2                       5                      10 
+##          Centmeyer Loft   Charlie&#39;s Little Loft        Churn Creek Loft 
+##                       2                       3                       3 
+##      Clear Springs Loft     Credeur Family Loft          Crestview Loft 
+##                       3                       2                       4 
+##    Crowley&#39;s Ridge Loft      Cypress Hills Farm           Dal-Tex R P C 
+##                       2                       2                       3 
+##             Dave Dudley            Dave Harrett            Debbie Ganus 
+##                       3                       6                       6 
+##        Drama Queen Loft               Dunn Loft              E &amp; E Loft 
+##                       3                       1                       3 
+##           Emerson/Krass          Equalizer Loft             Family Loft 
+##                       5                       4                      12 
+##      Fisher Family Loft            Flyhome Loft         Flying D Loft 2 
+##                       5                       2                       3 
+##       Ganus Family Loft        Goshentown Lofts        Greek Connection 
+##                       6                       4                       5 
+##            Greg Glazier       Hi-Cal Connection         Hutchins/Milner 
+##                       4                       5                       5 
+##            Iv Aces Loft    J &amp; M Partridge Loft                  Jb &amp; D 
+##                       2                       4                      13 
+##                  Jerdee       Jerry Allensworth           Jerry Johnson 
+##                       6                       4                       2 
+##          Junior Juanich              Kiko Arana               King City 
+##                       6                       4                       3 
+##             Kokomo Loft               Kwan Loft            Leyba&#39;s Loft 
+##                       2                       4                       3 
+##       Little Reata Loft           Loizzi/Sikora           Lonestar Loft 
+##                       6                       5                       4 
+##        Mayberry Classic       Mc Laughlin Lofts              Mike Belus 
+##                       2                       4                       2 
+##           Miller Loft 2         Milner-Mckinsey              Mr. Dovely 
+##                       1                       8                       1 
+##           N C Syndicate      Nanez Family Lofts         Non Pareil Loft 
+##                       6                       4                       4 
+##             Oscar/Ralph                P J Loft            Protege Loft 
+##                       1                       3                       4 
+##              Rayce Loft                  Redtex             Rick Barker 
+##                       4                      12                       5 
+## Sandstrom Brothers Loft      Shang N Dennis Yoh    Shawnie &amp; Lenny Loft 
+##                       7                       5                       4 
+##    Sierra Ranch Classic      Silver Dollar Loft         Skip&#39;s Janssens 
+##                       6                       2                       5 
+##           Stelling Loft            Stenman Loft              T C R Loft 
+##                       4                      10                       5 
+##        Terry Montgomery           Texas Outlaws         The Bailey Team 
+##                       2                       4                       7 
+##     The Brand Syndicate               Tongol 11       Tony Family Lofts 
+##                       5                       3                       3 
+##               Turk Loft                 Twin200          Woodsend/Perry 
+##                       2                       2                       9</code></pre>
+<pre class="r"><code>data.frame(table(pg$Breeder))</code></pre>
+<pre><code>##                       Var1 Freq
+## 1                  4-Birds    4
+## 2           7-11 Syndicate    2
+## 3               A P C Loft   12
+## 4              Alias-Alias   11
+## 5              Alonso Loft    3
+## 6           American Lofts    4
+## 7              Andy Skwiat   10
+## 8               B D P Loft    3
+## 9         Baldwin &amp; Tilson    7
+## 10             Baysideboys    3
+## 11             Bionic Loft    2
+## 12         Braden/Olivieri    2
+## 13         Bud &amp; Orie Loft    2
+## 14      Bynum Family Lofts    5
+## 15           Captain Chuck   10
+## 16          Centmeyer Loft    2
+## 17   Charlie&#39;s Little Loft    3
+## 18        Churn Creek Loft    3
+## 19      Clear Springs Loft    3
+## 20     Credeur Family Loft    2
+## 21          Crestview Loft    4
+## 22    Crowley&#39;s Ridge Loft    2
+## 23      Cypress Hills Farm    2
+## 24           Dal-Tex R P C    3
+## 25             Dave Dudley    3
+## 26            Dave Harrett    6
+## 27            Debbie Ganus    6
+## 28        Drama Queen Loft    3
+## 29               Dunn Loft    1
+## 30              E &amp; E Loft    3
+## 31           Emerson/Krass    5
+## 32          Equalizer Loft    4
+## 33             Family Loft   12
+## 34      Fisher Family Loft    5
+## 35            Flyhome Loft    2
+## 36         Flying D Loft 2    3
+## 37       Ganus Family Loft    6
+## 38        Goshentown Lofts    4
+## 39        Greek Connection    5
+## 40            Greg Glazier    4
+## 41       Hi-Cal Connection    5
+## 42         Hutchins/Milner    5
+## 43            Iv Aces Loft    2
+## 44    J &amp; M Partridge Loft    4
+## 45                  Jb &amp; D   13
+## 46                  Jerdee    6
+## 47       Jerry Allensworth    4
+## 48           Jerry Johnson    2
+## 49          Junior Juanich    6
+## 50              Kiko Arana    4
+## 51               King City    3
+## 52             Kokomo Loft    2
+## 53               Kwan Loft    4
+## 54            Leyba&#39;s Loft    3
+## 55       Little Reata Loft    6
+## 56           Loizzi/Sikora    5
+## 57           Lonestar Loft    4
+## 58        Mayberry Classic    2
+## 59       Mc Laughlin Lofts    4
+## 60              Mike Belus    2
+## 61           Miller Loft 2    1
+## 62         Milner-Mckinsey    8
+## 63              Mr. Dovely    1
+## 64           N C Syndicate    6
+## 65      Nanez Family Lofts    4
+## 66         Non Pareil Loft    4
+## 67             Oscar/Ralph    1
+## 68                P J Loft    3
+## 69            Protege Loft    4
+## 70              Rayce Loft    4
+## 71                  Redtex   12
+## 72             Rick Barker    5
+## 73 Sandstrom Brothers Loft    7
+## 74      Shang N Dennis Yoh    5
+## 75    Shawnie &amp; Lenny Loft    4
+## 76    Sierra Ranch Classic    6
+## 77      Silver Dollar Loft    2
+## 78         Skip&#39;s Janssens    5
+## 79           Stelling Loft    4
+## 80            Stenman Loft   10
+## 81              T C R Loft    5
+## 82        Terry Montgomery    2
+## 83           Texas Outlaws    4
+## 84         The Bailey Team    7
+## 85     The Brand Syndicate    5
+## 86               Tongol 11    3
+## 87       Tony Family Lofts    3
+## 88               Turk Loft    2
+## 89                 Twin200    2
+## 90          Woodsend/Perry    9</code></pre>
+<pre class="r"><code>count(pg, Breeder)</code></pre>
+<pre><code>##                     Breeder  n
+##  1:                 4-Birds  4
+##  2:          7-11 Syndicate  2
+##  3:              A P C Loft 12
+##  4:             Alias-Alias 11
+##  5:             Alonso Loft  3
+##  6:          American Lofts  4
+##  7:             Andy Skwiat 10
+##  8:              B D P Loft  3
+##  9:        Baldwin &amp; Tilson  7
+## 10:             Baysideboys  3
+## 11:             Bionic Loft  2
+## 12:         Braden/Olivieri  2
+## 13:         Bud &amp; Orie Loft  2
+## 14:      Bynum Family Lofts  5
+## 15:           Captain Chuck 10
+## 16:          Centmeyer Loft  2
+## 17:   Charlie&#39;s Little Loft  3
+## 18:        Churn Creek Loft  3
+## 19:      Clear Springs Loft  3
+## 20:     Credeur Family Loft  2
+## 21:          Crestview Loft  4
+## 22:    Crowley&#39;s Ridge Loft  2
+## 23:      Cypress Hills Farm  2
+## 24:           Dal-Tex R P C  3
+## 25:             Dave Dudley  3
+## 26:            Dave Harrett  6
+## 27:            Debbie Ganus  6
+## 28:        Drama Queen Loft  3
+## 29:               Dunn Loft  1
+## 30:              E &amp; E Loft  3
+## 31:           Emerson/Krass  5
+## 32:          Equalizer Loft  4
+## 33:             Family Loft 12
+## 34:      Fisher Family Loft  5
+## 35:            Flyhome Loft  2
+## 36:         Flying D Loft 2  3
+## 37:       Ganus Family Loft  6
+## 38:        Goshentown Lofts  4
+## 39:        Greek Connection  5
+## 40:            Greg Glazier  4
+## 41:       Hi-Cal Connection  5
+## 42:         Hutchins/Milner  5
+## 43:            Iv Aces Loft  2
+## 44:    J &amp; M Partridge Loft  4
+## 45:                  Jb &amp; D 13
+## 46:                  Jerdee  6
+## 47:       Jerry Allensworth  4
+## 48:           Jerry Johnson  2
+## 49:          Junior Juanich  6
+## 50:              Kiko Arana  4
+## 51:               King City  3
+## 52:             Kokomo Loft  2
+## 53:               Kwan Loft  4
+## 54:            Leyba&#39;s Loft  3
+## 55:       Little Reata Loft  6
+## 56:           Loizzi/Sikora  5
+## 57:           Lonestar Loft  4
+## 58:        Mayberry Classic  2
+## 59:       Mc Laughlin Lofts  4
+## 60:              Mike Belus  2
+## 61:           Miller Loft 2  1
+## 62:         Milner-Mckinsey  8
+## 63:              Mr. Dovely  1
+## 64:           N C Syndicate  6
+## 65:      Nanez Family Lofts  4
+## 66:         Non Pareil Loft  4
+## 67:             Oscar/Ralph  1
+## 68:                P J Loft  3
+## 69:            Protege Loft  4
+## 70:              Rayce Loft  4
+## 71:                  Redtex 12
+## 72:             Rick Barker  5
+## 73: Sandstrom Brothers Loft  7
+## 74:      Shang N Dennis Yoh  5
+## 75:    Shawnie &amp; Lenny Loft  4
+## 76:    Sierra Ranch Classic  6
+## 77:      Silver Dollar Loft  2
+## 78:         Skip&#39;s Janssens  5
+## 79:           Stelling Loft  4
+## 80:            Stenman Loft 10
+## 81:              T C R Loft  5
+## 82:        Terry Montgomery  2
+## 83:           Texas Outlaws  4
+## 84:         The Bailey Team  7
+## 85:     The Brand Syndicate  5
+## 86:               Tongol 11  3
+## 87:       Tony Family Lofts  3
+## 88:               Turk Loft  2
+## 89:                 Twin200  2
+## 90:          Woodsend/Perry  9
+##                     Breeder  n</code></pre>
+<pre class="r"><code>#or with magrittr piping
+pg %&gt;% count(Breeder)</code></pre>
+<pre><code>##                     Breeder  n
+##  1:                 4-Birds  4
+##  2:          7-11 Syndicate  2
+##  3:              A P C Loft 12
+##  4:             Alias-Alias 11
+##  5:             Alonso Loft  3
+##  6:          American Lofts  4
+##  7:             Andy Skwiat 10
+##  8:              B D P Loft  3
+##  9:        Baldwin &amp; Tilson  7
+## 10:             Baysideboys  3
+## 11:             Bionic Loft  2
+## 12:         Braden/Olivieri  2
+## 13:         Bud &amp; Orie Loft  2
+## 14:      Bynum Family Lofts  5
+## 15:           Captain Chuck 10
+## 16:          Centmeyer Loft  2
+## 17:   Charlie&#39;s Little Loft  3
+## 18:        Churn Creek Loft  3
+## 19:      Clear Springs Loft  3
+## 20:     Credeur Family Loft  2
+## 21:          Crestview Loft  4
+## 22:    Crowley&#39;s Ridge Loft  2
+## 23:      Cypress Hills Farm  2
+## 24:           Dal-Tex R P C  3
+## 25:             Dave Dudley  3
+## 26:            Dave Harrett  6
+## 27:            Debbie Ganus  6
+## 28:        Drama Queen Loft  3
+## 29:               Dunn Loft  1
+## 30:              E &amp; E Loft  3
+## 31:           Emerson/Krass  5
+## 32:          Equalizer Loft  4
+## 33:             Family Loft 12
+## 34:      Fisher Family Loft  5
+## 35:            Flyhome Loft  2
+## 36:         Flying D Loft 2  3
+## 37:       Ganus Family Loft  6
+## 38:        Goshentown Lofts  4
+## 39:        Greek Connection  5
+## 40:            Greg Glazier  4
+## 41:       Hi-Cal Connection  5
+## 42:         Hutchins/Milner  5
+## 43:            Iv Aces Loft  2
+## 44:    J &amp; M Partridge Loft  4
+## 45:                  Jb &amp; D 13
+## 46:                  Jerdee  6
+## 47:       Jerry Allensworth  4
+## 48:           Jerry Johnson  2
+## 49:          Junior Juanich  6
+## 50:              Kiko Arana  4
+## 51:               King City  3
+## 52:             Kokomo Loft  2
+## 53:               Kwan Loft  4
+## 54:            Leyba&#39;s Loft  3
+## 55:       Little Reata Loft  6
+## 56:           Loizzi/Sikora  5
+## 57:           Lonestar Loft  4
+## 58:        Mayberry Classic  2
+## 59:       Mc Laughlin Lofts  4
+## 60:              Mike Belus  2
+## 61:           Miller Loft 2  1
+## 62:         Milner-Mckinsey  8
+## 63:              Mr. Dovely  1
+## 64:           N C Syndicate  6
+## 65:      Nanez Family Lofts  4
+## 66:         Non Pareil Loft  4
+## 67:             Oscar/Ralph  1
+## 68:                P J Loft  3
+## 69:            Protege Loft  4
+## 70:              Rayce Loft  4
+## 71:                  Redtex 12
+## 72:             Rick Barker  5
+## 73: Sandstrom Brothers Loft  7
+## 74:      Shang N Dennis Yoh  5
+## 75:    Shawnie &amp; Lenny Loft  4
+## 76:    Sierra Ranch Classic  6
+## 77:      Silver Dollar Loft  2
+## 78:         Skip&#39;s Janssens  5
+## 79:           Stelling Loft  4
+## 80:            Stenman Loft 10
+## 81:              T C R Loft  5
+## 82:        Terry Montgomery  2
+## 83:           Texas Outlaws  4
+## 84:         The Bailey Team  7
+## 85:     The Brand Syndicate  5
+## 86:               Tongol 11  3
+## 87:       Tony Family Lofts  3
+## 88:               Turk Loft  2
+## 89:                 Twin200  2
+## 90:          Woodsend/Perry  9
+##                     Breeder  n</code></pre>
+<pre class="r"><code>#dt[filter, select, group]
+pg[, .N, Breeder]</code></pre>
+<pre><code>##                     Breeder  N
+##  1:           Texas Outlaws  4
+##  2:          Junior Juanich  6
+##  3:       Jerry Allensworth  4
+##  4:             Alias-Alias 11
+##  5:            Greg Glazier  4
+##  6:           Dal-Tex R P C  3
+##  7:           N C Syndicate  6
+##  8:        Baldwin &amp; Tilson  7
+##  9:                  Redtex 12
+## 10:        Terry Montgomery  2
+## 11:          Woodsend/Perry  9
+## 12:          Crestview Loft  4
+## 13:        Goshentown Lofts  4
+## 14:            Flyhome Loft  2
+## 15:         Skip&#39;s Janssens  5
+## 16:         Bud &amp; Orie Loft  2
+## 17:         Milner-Mckinsey  8
+## 18:    Shawnie &amp; Lenny Loft  4
+## 19:      Nanez Family Lofts  4
+## 20:                  Jb &amp; D 13
+## 21:      Silver Dollar Loft  2
+## 22:            Protege Loft  4
+## 23:              Mike Belus  2
+## 24:    Sierra Ranch Classic  6
+## 25:              A P C Loft 12
+## 26:        Churn Creek Loft  3
+## 27: Sandstrom Brothers Loft  7
+## 28:         Flying D Loft 2  3
+## 29:      Clear Springs Loft  3
+## 30:          Equalizer Loft  4
+## 31:            Stenman Loft 10
+## 32:    Crowley&#39;s Ridge Loft  2
+## 33:            Dave Harrett  6
+## 34:             Dave Dudley  3
+## 35:       Mc Laughlin Lofts  4
+## 36:       Little Reata Loft  6
+## 37:           Emerson/Krass  5
+## 38:         Non Pareil Loft  4
+## 39:             Andy Skwiat 10
+## 40:          American Lofts  4
+## 41:             Alonso Loft  3
+## 42:           Captain Chuck 10
+## 43:      Shang N Dennis Yoh  5
+## 44:    J &amp; M Partridge Loft  4
+## 45:              B D P Loft  3
+## 46:              T C R Loft  5
+## 47:             Family Loft 12
+## 48:   Charlie&#39;s Little Loft  3
+## 49:             Oscar/Ralph  1
+## 50:         The Bailey Team  7
+## 51:               Kwan Loft  4
+## 52:       Ganus Family Loft  6
+## 53:                 4-Birds  4
+## 54:        Greek Connection  5
+## 55:               Turk Loft  2
+## 56:            Leyba&#39;s Loft  3
+## 57:           Lonestar Loft  4
+## 58:      Bynum Family Lofts  5
+## 59:     The Brand Syndicate  5
+## 60:             Kokomo Loft  2
+## 61:           Loizzi/Sikora  5
+## 62:              Rayce Loft  4
+## 63:             Bionic Loft  2
+## 64:            Iv Aces Loft  2
+## 65:      Fisher Family Loft  5
+## 66:     Credeur Family Loft  2
+## 67:              Kiko Arana  4
+## 68:             Rick Barker  5
+## 69:            Debbie Ganus  6
+## 70:                P J Loft  3
+## 71:               King City  3
+## 72:          Centmeyer Loft  2
+## 73:       Hi-Cal Connection  5
+## 74:           Stelling Loft  4
+## 75:               Tongol 11  3
+## 76:               Dunn Loft  1
+## 77:          7-11 Syndicate  2
+## 78:        Drama Queen Loft  3
+## 79:         Hutchins/Milner  5
+## 80:           Miller Loft 2  1
+## 81:              Mr. Dovely  1
+## 82:      Cypress Hills Farm  2
+## 83:           Jerry Johnson  2
+## 84:                 Twin200  2
+## 85:             Baysideboys  3
+## 86:        Mayberry Classic  2
+## 87:       Tony Family Lofts  3
+## 88:                  Jerdee  6
+## 89:              E &amp; E Loft  3
+## 90:         Braden/Olivieri  2
+##                     Breeder  N</code></pre>
+<pre class="r"><code>pg[Color == &quot;BBWF&quot;, .(Sex, Speed), .(Breeder)][, .N, .(Breeder)][order(-N)]</code></pre>
+<pre><code>##                     Breeder N
+##  1:              Mike Belus 2
+##  2:             Andy Skwiat 2
+##  3:       Ganus Family Loft 2
+##  4:          American Lofts 2
+##  5:             Family Loft 2
+##  6:      Shang N Dennis Yoh 2
+##  7:       Little Reata Loft 2
+##  8:            Greg Glazier 1
+##  9:         Milner-Mckinsey 1
+## 10:      Nanez Family Lofts 1
+## 11:    Sierra Ranch Classic 1
+## 12:         Skip&#39;s Janssens 1
+## 13:              A P C Loft 1
+## 14:       Jerry Allensworth 1
+## 15:            Leyba&#39;s Loft 1
+## 16:             Alias-Alias 1
+## 17:              Kiko Arana 1
+## 18:              Rayce Loft 1
+## 19:           Emerson/Krass 1
+## 20:       Hi-Cal Connection 1
+## 21:          Centmeyer Loft 1
+## 22:          7-11 Syndicate 1
+## 23:               Tongol 11 1
+## 24:             Alonso Loft 1
+## 25:            Debbie Ganus 1
+## 26:                  Jerdee 1
+## 27:         Hutchins/Milner 1
+## 28: Sandstrom Brothers Loft 1
+## 29:         Braden/Olivieri 1
+##                     Breeder N</code></pre>
+<div id="nested-option" class="section level2">
+<h2>Nested Option:</h2>
+<pre class="r"><code>library(dplyr)
+library(data.table)
+
+arrange(
+  summarize(
+    group_by(
+      filter(mtcars, carb &gt; 1),cyl), Avg_mpg = mean(mpg)), desc(Avg_mpg)
+  )</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##     cyl Avg_mpg
+##   &lt;dbl&gt;   &lt;dbl&gt;
+## 1     4    25.9
+## 2     6    19.7
+## 3     8    15.1</code></pre>
+</div>
+<div id="multiple-object-option" class="section level2">
+<h2>Multiple Object Option</h2>
+<pre class="r"><code>a &lt;- filter(mtcars, carb &gt; 1) 
+b &lt;- group_by(a, cyl) 
+c &lt;- summarise(b, Avg_mpg = mean(mpg)) 
+d &lt;- arrange(c, desc(Avg_mpg)) 
+print(d)</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##     cyl Avg_mpg
+##   &lt;dbl&gt;   &lt;dbl&gt;
+## 1     4    25.9
+## 2     6    19.7
+## 3     8    15.1</code></pre>
+</div>
+<div id="option" class="section level2">
+<h2>%&gt;% Option:</h2>
+<pre class="r"><code>library(magrittr) 
+library(dplyr) 
+mtcars %&gt;% 
+  filter(carb &gt; 1) %&gt;% 
+  group_by(cyl) %&gt;% 
+  summarise(Avg_mpg = mean(mpg)) %&gt;% 
+  arrange(desc(Avg_mpg))</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##     cyl Avg_mpg
+##   &lt;dbl&gt;   &lt;dbl&gt;
+## 1     4    25.9
+## 2     6    19.7
+## 3     8    15.1</code></pre>
+</div>
+<div id="is-assumed-first" class="section level2">
+<h2>. is assumed first</h2>
+<pre class="r"><code>mtcars %&gt;% 
+  filter(carb &gt; 1) %&gt;% 
+  lm(mpg ~ cyl + hp, data = .) %&gt;% 
+  summary()</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ cyl + hp, data = .)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.6163 -1.4162 -0.1506  1.6181  5.2021 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 35.67647    2.28382  15.621 2.16e-13 ***
+## cyl         -2.22014    0.52619  -4.219 0.000353 ***
+## hp          -0.01414    0.01323  -1.069 0.296633    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.689 on 22 degrees of freedom
+## Multiple R-squared:  0.7601, Adjusted R-squared:  0.7383 
+## F-statistic: 34.85 on 2 and 22 DF,  p-value: 1.516e-07</code></pre>
+</div>
+<div id="data.table-piping" class="section level2">
+<h2>data.table piping</h2>
+<pre class="r"><code>set.seed(123)
+dt &lt;- data.table(a = sample(letters, 1e5, replace = TRUE),
+                 b = abs(rnorm(1e5)))
+
+dt</code></pre>
+<pre><code>##         a         b
+##      1: o 0.2854386
+##      2: s 0.3810986
+##      3: n 1.1975067
+##      4: c 1.0806172
+##      5: j 1.0456392
+##     ---            
+##  99996: y 1.8387322
+##  99997: k 1.0059273
+##  99998: n 0.5727827
+##  99999: r 0.3695162
+## 100000: f 0.4031301</code></pre>
+</div>
+<div id="one-line" class="section level2">
+<h2>one line</h2>
+<pre class="r"><code># adding columns in dt uses :=, $ will still work as well but not for piping
+dt[, x := sqrt(b)][, y := b^2][, z := paste0(a , b)]
+
+dt</code></pre>
+<pre><code>##         a         b         x         y                  z
+##      1: o 0.2854386 0.5342646 0.0814752 o0.285438610498582
+##      2: s 0.3810986 0.6173319 0.1452362  s0.38109864857572
+##      3: n 1.1975067 1.0943065 1.4340223  n1.19750670084312
+##      4: c 1.0806172 1.0395274 1.1677335  c1.08061720585168
+##      5: j 1.0456392 1.0225650 1.0933613  j1.04563918817768
+##     ---                                                   
+##  99996: y 1.8387322 1.3559986 3.3809363  y1.83873224053769
+##  99997: k 1.0059273 1.0029593 1.0118897   k1.0059272754005
+##  99998: n 0.5727827 0.7568241 0.3280800 n0.572782712020763
+##  99999: r 0.3695162 0.6078785 0.1365422 r0.369516237085063
+## 100000: f 0.4031301 0.6349253 0.1625139  f0.40313009749158</code></pre>
+</div>
+</div>
+<div id="multiple-lines---ewwwww" class="section level1">
+<h1>multiple lines - ewwwww</h1>
+<pre class="r"><code># multiline dt piping is hard to read
+dt[, x := sqrt(b)][
+  , y := b^2][
+    , z := paste0(a , b)]
+
+dt</code></pre>
+<pre><code>##         a         b         x         y                  z
+##      1: o 0.2854386 0.5342646 0.0814752 o0.285438610498582
+##      2: s 0.3810986 0.6173319 0.1452362  s0.38109864857572
+##      3: n 1.1975067 1.0943065 1.4340223  n1.19750670084312
+##      4: c 1.0806172 1.0395274 1.1677335  c1.08061720585168
+##      5: j 1.0456392 1.0225650 1.0933613  j1.04563918817768
+##     ---                                                   
+##  99996: y 1.8387322 1.3559986 3.3809363  y1.83873224053769
+##  99997: k 1.0059273 1.0029593 1.0118897   k1.0059272754005
+##  99998: n 0.5727827 0.7568241 0.3280800 n0.572782712020763
+##  99999: r 0.3695162 0.6078785 0.1365422 r0.369516237085063
+## 100000: f 0.4031301 0.6349253 0.1625139  f0.40313009749158</code></pre>
+</div>
+<div id="using-magrittr-pipes-with-data.table--" class="section level1">
+<h1>using magrittr pipes with data.table :-)</h1>
+<pre class="r"><code># Best of both worlds!
+dt[, x := sqrt(b)] %&gt;%
+  .[, y := b^2] %&gt;%
+  .[, z := paste0(a , b)]
+
+dt</code></pre>
+<pre><code>##         a         b         x         y                  z
+##      1: o 0.2854386 0.5342646 0.0814752 o0.285438610498582
+##      2: s 0.3810986 0.6173319 0.1452362  s0.38109864857572
+##      3: n 1.1975067 1.0943065 1.4340223  n1.19750670084312
+##      4: c 1.0806172 1.0395274 1.1677335  c1.08061720585168
+##      5: j 1.0456392 1.0225650 1.0933613  j1.04563918817768
+##     ---                                                   
+##  99996: y 1.8387322 1.3559986 3.3809363  y1.83873224053769
+##  99997: k 1.0059273 1.0029593 1.0118897   k1.0059272754005
+##  99998: n 0.5727827 0.7568241 0.3280800 n0.572782712020763
+##  99999: r 0.3695162 0.6078785 0.1365422 r0.369516237085063
+## 100000: f 0.4031301 0.6349253 0.1625139  f0.40313009749158</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
