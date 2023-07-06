@@ -5,7 +5,7 @@ date: '2023-06-01'
 output: html_document
 ---
 
-* Note: If chunks do not run, you may have to uncomment package installation or other lines *
+*Note: If chunks do not run, you may have to uncomment package installation or other lines*
 
 ## Setup
 
