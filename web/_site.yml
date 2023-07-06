@@ -12,3 +12,8 @@ navbar:
       href: about.html
     - text: "The Presentation"
       href: presentation.html
+    - menu:
+      - text: "The 3 Ways of R"
+        href: intro_to_R-applied_ggplot2.html
+      - text: "Applied R: ggplot2"
+        href: intro_to_R-overview_and_3_ways.html
