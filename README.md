@@ -1,0 +1,3 @@
+# intro-rmd-websites
+
+This repository hosts the demonstration website and presentation for the [July 5th, 2023 presentation on website workflows with RMarkdown and GitHub Pages](https://dspg-young-scholars-program.github.io/intro-rmd-websites/presentation.html#(1)), as well as [Intro to R training materials](https://dspg-young-scholars-program.github.io/intro-rmd-websites/intro_to_R-overview_and_3_ways.html). These materials were used for training the Summer 2023 Data Science for the Public Good Young Scholars Program cohort. [Learn more about the DSPG program here](https://biocomplexity.virginia.edu/data-science-public-good-young-scholars-program).
