@@ -174,7 +174,7 @@ ggsave("metadata_exploration-element_comparison_bar.png", plot = last_plot(),
        height = 10, width = 14, units = "in", bg = "white")
 ```
 
-## Mapping with ggplot
+## Mapping with ggplot{#map}
 ```{r results = 'hide', message = FALSE}
 library(tidyverse)
 library(tidycensus)
