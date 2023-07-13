@@ -1,6 +1,6 @@
 ---
 title: 'Applied R: Intro to plotting w/ ggplot2'
-author: "Joanna Schroder"
+author: "Joanna Schroeder"
 date: '2023-06-01'
 output: html_document
 ---
@@ -173,6 +173,71 @@ getwd()
 ggsave("metadata_exploration-element_comparison_bar.png", plot = last_plot(),
        height = 10, width = 14, units = "in", bg = "white")
 ```
+
+## Mapping with ggplot
+```{r results = 'hide', message = FALSE}
+library(tidyverse)
+library(tidycensus)
+
+# First use tidycensus to get the data
+vars <- c("S1702_C01_001", "S1702_C02_001", "S1702_C01_043E", "S1702_C01_044E", "S1702_C01_045E", "S1702_C01_046E", "S1702_C01_047E", "S1702_C01_048E", "S1702_C01_049E", "S1702_C01_050E")
+fairfax_family_poverty <- get_acs(geography = "tract", variables = vars, state = "VA",
+                                  county = "Fairfax County", year = 2020, geometry =
+                                    TRUE, survey = "acs5", cache_table = TRUE)
+# Make sure you have the argument geometry = TRUE
+
+library(tidyverse)
+library(tidycensus)
+
+# Second use ggplot to map the data
+fairfax_family_poverty %>% filter(variable == "S1702_C01_001") %>%
+  # If more than one variable, filter for the name of the variable you want to map
+  ggplot() +
+  geom_sf(aes(fill = estimate)) + # fill = name of column with values to map
+  labs(fill = "Population (Count)", # Legend title
+       title = "Fairfax County Population (2020)", # Graph title
+       subtitle = "Measured at the Census Tract", 
+       caption = "A great phrase explaining my figure \n
+       Data Source: American Community Survey, 5-Year Estimates, Table S1702") + 
+        #Graph caption
+  theme_void() # Takes out x and y axis, axis labels
+# You can also make whatever changes you want to the map (color palettes, geography outlines, adding points etc)
+
+
+library(viridis)
+fairfax_family_poverty %>% filter(variable == "S1702_C01_001") %>%
+  # If more than one variable, filter for the name of the variable you want to map
+  ggplot() +
+  geom_sf(aes(fill = estimate)) + # fill = name of column with values to map
+  labs(fill = "Population (Count)", # Legend title
+       title = "Fairfax County Population (2020)", # Graph title
+       subtitle = "Measured at the Census Tract", 
+       caption = "A great phrase explaining my figure \n
+       Data Source: American Community Survey, 5-Year Estimates, Table S1702") + 
+  #Graph caption
+  theme_void() + # Takes out x and y axis, axis labels
+  scale_fill_viridis(option = "viridis") # or option = "magma"
+# You can also make whatever changes you want to the map (color palettes, geography outlines, adding points etc)
+
+# These are the palettes used for the data commons
+#devtools::install_github("thomasp85/scico")
+library(scico)
+
+fairfax_family_poverty %>% filter(variable == "S1702_C01_001") %>%
+  # If more than one variable, filter for the name of the variable you want to map
+  ggplot() +
+  geom_sf(aes(fill = estimate)) + # fill = name of column with values to map
+  labs(fill = "Population (Count)", # Legend title
+       title = "Fairfax County Population (2020)", # Graph title
+       subtitle = "Measured at the Census Tract", 
+       caption = "A great phrase explaining my figure \n
+       Data Source: American Community Survey, 5-Year Estimates, Table S1702") + 
+  #Graph caption
+  theme_void() + # Takes out x and y axis, axis labels
+  scale_fill_scico(palette = 'lajolla')  # or palette = "vik" (divergent)
+# You can also make whatever changes you want to the map (color palettes, geography outlines, adding points etc)
+```
+
 
 # Your turn!
 
